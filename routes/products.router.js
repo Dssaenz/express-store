@@ -48,7 +48,17 @@ router.patch('/:id', (req, res) => {
     message: 'Product updated',
     data: body,
     id,
-  })
-})
+  });
+});
+
+
+// Endpoint to delete a product
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  res.json({
+    message: 'Product deleted',
+    id,
+  });
+});
 
 module.exports = router;
