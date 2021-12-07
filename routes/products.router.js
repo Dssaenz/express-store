@@ -17,25 +17,31 @@ router.get('/', (req, res) => {
     });
   };
 
-  res.json(products);
+  res.status(200).json(products);
 });
 
 // Endpoint to get product by id
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  res.json({
-    id,
-    name: 'Vr ps4',
-    price: 3000,
-  })
+  if (id === '000') {
+    res.status(404).json({
+      message: 'Not found',
+    });
+  } else {
+    res.status(200).json({
+      id,
+      name: 'Vr ps4',
+      price: 3000,
+    });
+  };
 });
 
 // Endpoint to create a product
 router.post('/', (req, res) => {
   const body = req.body;
-  res.json({
+  res.status(201).json({
     message: 'Product created',
-    data: body
+    data: body,
   });
 });
 
@@ -44,7 +50,7 @@ router.patch('/:id', (req, res) => {
   const { id } = req.params;
   const body = req.body;
 
-  res.json({
+  res.status(200).json({
     message: 'Product updated',
     data: body,
     id,
@@ -55,7 +61,7 @@ router.patch('/:id', (req, res) => {
 // Endpoint to delete a product
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  res.json({
+  res.status(200).json({
     message: 'Product deleted',
     id,
   });
