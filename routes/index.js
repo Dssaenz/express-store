@@ -5,6 +5,7 @@ const categoriesRuter = require('./categories.router');
 
 function routerApi(app) {
   const routeVersion = express.Router();
+
   app.use('/api/v1', routeVersion);
   routeVersion.use('/users', usersRouter);
   routeVersion.use('/products', productsRouter);
