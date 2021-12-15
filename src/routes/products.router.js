@@ -5,15 +5,13 @@ const router = express.Router();
 
 const service = new ProductsServices();
 
-// Endpoint to get all products using 'faker'
-router.get('/', async (req, res) => {
+// Endpoint to get all products
+router.get('/', async (req, res, next) => {
   try {
     const products = await service.find();
     res.json(products);
   } catch (error) {
-    res.status(404).json({
-      message: error
-    })
+    next(error);
   };
 });
 

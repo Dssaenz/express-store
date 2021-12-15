@@ -6,6 +6,7 @@ class ProductsServices {
     this.generate();
   };
 
+  // Function to generate products using 'faker'
   generate() {
     const limit = 20;
     for (let index = 0; index < limit; index++) {
