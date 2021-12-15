@@ -16,15 +16,13 @@ router.get('/', async (req, res, next) => {
 });
 
 // Endpoint to get product by id
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const product = await service.findOne(id);
     res.status(201).json(product);
   } catch (error) {
-    res.status(404).json({
-      message: error.message
-    });
+      next(error);
   };
 });
 
