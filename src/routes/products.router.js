@@ -1,5 +1,13 @@
 const express = require('express');
 const ProductsServices = require('../services/products.services');
+const validatorHandler = require('../middlewares/validator.handler');
+
+const {
+  getProductScheme,
+  createProductScheme,
+  updateProductScheme,
+  deleteProductScheme
+} = require('../schemes/product.scheme');
 
 const router = express.Router();
 
@@ -16,18 +24,22 @@ router.get('/', async (req, res, next) => {
 });
 
 // Endpoint to get product by id
-router.get('/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const product = await service.findOne(id);
-    res.status(201).json(product);
-  } catch (error) {
+router.get('/:id',
+  validatorHandler(getProductScheme, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const product = await service.findOne(id);
+      res.status(201).json(product);
+    } catch (error) {
       next(error);
-  };
-});
+    };
+  });
 
 // Endpoint to create a product
-router.post('/', async (req, res) => {
+router.post('/',
+  validatorHandler(createProductScheme, 'body'),
+  async (req, res) => {
   try {
     const body = req.body;
     const products = await service.createProduct(body);
@@ -40,7 +52,10 @@ router.post('/', async (req, res) => {
 });
 
 // Endpoint to update an especific value of product
-router.patch('/:id', async (req, res) => {
+router.patch('/:id',
+  validatorHandler(getProductScheme, 'params'),
+  validatorHandler(updateProductScheme, 'body'),
+  async (req, res) => {
   try {
     const { id } = req.params;
     const body = req.body;
@@ -55,7 +70,9 @@ router.patch('/:id', async (req, res) => {
 });
 
 // Endpoint to delete a product
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',
+  validatorHandler(deleteProductScheme, 'params'),
+  async (req, res) => {
   try {
     const { id } = req.params;
     const product = await service.deleteProduct(id);
